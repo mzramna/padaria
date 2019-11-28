@@ -67,7 +67,7 @@ public class Padaria {
             System.out.println("erro");
         }*/
         
-        try {
+        /*try {
             ArrayList<Clientes> clientes=BancoDeDados.buscarClientes("./clientes.csv","Tipo de cliente","F");
             for(int i=0;i<clientes.size();i++){
                 System.out.println(String.valueOf(clientes.get(i).toString()));
@@ -79,7 +79,7 @@ public class Padaria {
             
         } catch (IOException ex) {
             System.out.println("erro");
-        }
+        }*/
     
 }
 }

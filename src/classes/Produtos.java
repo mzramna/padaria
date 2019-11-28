@@ -101,6 +101,35 @@ public class Produtos {
         }
     }
 
+    public final String[] converterCSV(String[] colunas) {
+//String coluna_convert=associacao[coluna];
+        String[] retorno = new String[colunas.length];
+        for (int i = 0; i < colunas.length; i++) {
+            switch (colunas[i]) {
+                case "Código":
+                    retorno[i] = String.valueOf(this.codigo);
+                    break;
+                case "Descrição":
+                    retorno[i] = String.valueOf(this.descricao);
+                    break;
+                case "Estoque mínimo":
+                    retorno[i] = String.valueOf(this.estoqueMin);
+                    break;
+                case "Estoque atual":
+                    retorno[i] = String.valueOf(this.estoqueAtual);
+                    break;
+                case "Valor de custo":
+                    retorno[i] = String.valueOf(this.custo);
+                    break;
+                case "Percentual de lucro":
+                    retorno[i] = String.valueOf(this.lucro);
+                    break;
+
+            }
+        }
+        return retorno;
+    }
+
     public int getCodigo() {
         return codigo;
     }

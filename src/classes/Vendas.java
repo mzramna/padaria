@@ -89,6 +89,28 @@ public class Vendas {
         }
     }
 
+    public final String[] converterCSV(String[] colunas) {
+//String coluna_convert=associacao[coluna];
+        String[] retorno = new String[colunas.length];
+        for (int i = 0; i < colunas.length; i++) {
+            switch (colunas[i]) {
+                case "Cliente":
+                    retorno[i] = String.valueOf(this.cliente);
+                    break;
+                case "Modo de pagamento":
+                    retorno[i] = String.valueOf(this.pagamento);
+                    break;
+                case "Data de venda":
+                    retorno[i] = String.valueOf(this.cliente);
+                case "Produto":
+                    retorno[i] = String.valueOf(this.cliente);
+                case "Quantidade":
+                    retorno[i] = String.valueOf(this.cliente);
+            }
+        }
+        return retorno;
+    }
+
     public int getCliente() {
         return cliente;
     }
@@ -133,6 +155,5 @@ public class Vendas {
     public String toString() {
         return "Vendas{" + "cliente=" + cliente + ", produto=" + produto + ", quantidade=" + quantidade + ", venda=" + venda + ", pagamento=" + pagamento + '}';
     }
-    
 
 }

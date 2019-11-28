@@ -85,6 +85,35 @@ public class Fornecedores {
         }
     }
 
+    public final String[] converterCSV(String[] colunas) {
+        //String coluna_convert=associacao[coluna];
+        String[] retorno = new String[colunas.length];
+        for (int i = 0; i < colunas.length; i++) {
+            switch (colunas[i]) {
+                case "Código":
+                    retorno[i] = String.valueOf(this.codigo);
+                    break;
+                case "Nome":
+                    retorno[i] = String.valueOf(this.nome);
+                    break;
+                case "Endereço":
+                    retorno[i] = String.valueOf(this.endereco);
+                    break;
+                case "Telefone":
+                    retorno[i] = String.valueOf(this.telefone);
+                    break;
+                case "CNPJ":
+                    retorno[i] = String.valueOf(this.cnpj);
+                    break;
+                case "Pessoa de contato":
+                    retorno[i] = String.valueOf(this.pessoaContato);
+                    break;
+            }
+
+        }
+        return retorno;
+    }
+
     public int getCodigo() {
         return codigo;
     }
@@ -137,5 +166,5 @@ public class Fornecedores {
     public String toString() {
         return "Fornecedores{" + "codigo=" + codigo + ", nome=" + nome + ", endereco=" + endereco + ", telefone=" + telefone + ", cnpj=" + cnpj + ", pessoaContato=" + pessoaContato + '}';
     }
-    
+
 }

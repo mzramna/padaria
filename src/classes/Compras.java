@@ -15,9 +15,12 @@ import java.util.Date;
  * @author migue
  */
 public class Compras {
-    private int notaFiscal,fornecedor,quantidade,produto;
+
+    private int notaFiscal, fornecedor, quantidade, produto;
     private Date data;
-    private static final String[] associacao = {"Nota fiscal","Fornecedor","Data da compra","Produto","Quantidade"};
+    private static final String[] associacao = {"Nota fiscal", "Fornecedor", "Data da compra", "Produto", "Quantidade"};
+    private static final SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+
     public Compras(int notaFiscal, int fornecedor, int quantidade, int produto, Date data) {
         this.notaFiscal = notaFiscal;
         this.fornecedor = fornecedor;
@@ -25,7 +28,7 @@ public class Compras {
         this.produto = produto;
         this.data = data;
     }
-    
+
     public Compras() {
         this.notaFiscal = 0;
         this.fornecedor = 0;
@@ -33,7 +36,8 @@ public class Compras {
         this.produto = 0;
         this.data = new Date();
     }
-    public Compras(String[] linha, String[] colunas){
+
+    public Compras(String[] linha, String[] colunas) {
         this.notaFiscal = 0;
         this.fornecedor = 0;
         this.quantidade = 0;
@@ -52,47 +56,72 @@ public class Compras {
         }
 
     }
-    
+
     public final void carregarCSV(String coluna, String valor) {
         //String coluna_convert=associacao[coluna];
         switch (coluna) {
             case "Nota fiscal":
                 try {
-                    this.notaFiscal = Integer.parseInt(valor);
-                } catch (NumberFormatException nfe) {
-                    this.notaFiscal =0;
-                }
-                break;
+                this.notaFiscal = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.notaFiscal = 0;
+            }
+            break;
             case "Fornecedor":
                 try {
-                    this.fornecedor = Integer.parseInt(valor);
-                } catch (NumberFormatException nfe) {
-                    this.fornecedor =0;
-                }
-                break;
+                this.fornecedor = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.fornecedor = 0;
+            }
+            break;
             case "Quantidade":
                 try {
-                    this.quantidade = Integer.parseInt(valor);
-                } catch (NumberFormatException nfe) {
-                    this.quantidade =0;
-                }
-                break;
+                this.quantidade = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.quantidade = 0;
+            }
+            break;
             case "Produto":
                 try {
-                    this.produto = Integer.parseInt(valor);
-                } catch (NumberFormatException nfe) {
-                    this.produto =0;
-                }
-                break;
+                this.produto = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.produto = 0;
+            }
+            break;
             case "Data da compra":
-                SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
                 try {
-                    this.data = formatador.parse(valor);
-                } catch (ParseException ex) {
-                    this.data=new Date();
-                }
-                break;
+                this.data = formatador.parse(valor);
+            } catch (ParseException ex) {
+                this.data = new Date();
+            }
+            break;
         }
+    }
+
+    public final String[] converterCSV(String[] colunas) {
+        //String coluna_convert=associacao[coluna];
+        String[] retorno = new String[colunas.length];
+        for (int i = 0; i < colunas.length; i++) {
+            switch (colunas[i]) {
+                case "Nota fiscal":
+                    retorno[i] = String.valueOf(this.notaFiscal);
+
+                    break;
+                case "Fornecedor":
+                    retorno[i] = String.valueOf(this.fornecedor);
+                    break;
+                case "Quantidade":
+                    retorno[i] = String.valueOf(this.quantidade);
+                    break;
+                case "Produto":
+                    retorno[i] = String.valueOf(this.produto);
+                    break;
+                case "Data da compra":
+                    retorno[i] = formatador.format(this.data);
+                    break;
+            }
+        }
+        return retorno;
     }
 
     public int getNotaFiscal() {
@@ -140,5 +169,4 @@ public class Compras {
         return "Compras{" + "notaFiscal=" + notaFiscal + ", fornecedor=" + fornecedor + ", quantidade=" + quantidade + ", produto=" + produto + ", data=" + data + '}';
     }
 
-    
 }
