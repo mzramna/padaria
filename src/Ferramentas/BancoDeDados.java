@@ -32,6 +32,7 @@ public abstract class BancoDeDados  {
         }
         return clientes;
     }
+    
     static public ArrayList<Compras> preencherCompras(String arquivo) throws FileNotFoundException, IOException{
         ArrayList<Compras> compras=new ArrayList<>();
         AcessoArquivo acessoArquivo=new AcessoArquivo(arquivo, ';');
@@ -46,5 +47,50 @@ public abstract class BancoDeDados  {
             //System.out.println("\n");
         }
         return compras;
+    }
+    static public ArrayList<Fornecedores> preencherFornecedores(String arquivo) throws FileNotFoundException, IOException{
+        ArrayList<Fornecedores> fornecedores=new ArrayList<>();
+        AcessoArquivo acessoArquivo=new AcessoArquivo(arquivo, ';');
+        String[] colunas=acessoArquivo.colunas();
+        //for (int i=0;i<colunas.length;i++)
+            //System.out.println(colunas[i]);
+        List<String[]> dados=acessoArquivo.valores();
+        for (String[] elemento : dados){
+            //for (int i=0;i<elemento.length;i++)
+            //System.out.println(elemento[i]);
+            fornecedores.add(new Fornecedores(elemento,colunas));
+            //System.out.println("\n");
+        }
+        return fornecedores;
+    }
+    static public ArrayList<Produtos> preencherProdutos(String arquivo) throws FileNotFoundException, IOException{
+        ArrayList<Produtos> produtos=new ArrayList<>();
+        AcessoArquivo acessoArquivo=new AcessoArquivo(arquivo, ';');
+        String[] colunas=acessoArquivo.colunas();
+        //for (int i=0;i<colunas.length;i++)
+            //System.out.println(colunas[i]);
+        List<String[]> dados=acessoArquivo.valores();
+        for (String[] elemento : dados){
+            //for (int i=0;i<elemento.length;i++)
+            //System.out.println(elemento[i]);
+            produtos.add(new Produtos(elemento,colunas));
+            //System.out.println("\n");
+        }
+        return produtos;
+    }
+    static public ArrayList<Vendas> preencherVendas(String arquivo) throws FileNotFoundException, IOException{
+        ArrayList<Vendas> vendas=new ArrayList<>();
+        AcessoArquivo acessoArquivo=new AcessoArquivo(arquivo, ';');
+        String[] colunas=acessoArquivo.colunas();
+        //for (int i=0;i<colunas.length;i++)
+            //System.out.println(colunas[i]);
+        List<String[]> dados=acessoArquivo.valores();
+        for (String[] elemento : dados){
+            //for (int i=0;i<elemento.length;i++)
+            //System.out.println(elemento[i]);
+            vendas.add(new Vendas(elemento,colunas));
+            //System.out.println("\n");
+        }
+        return vendas;
     }
 }

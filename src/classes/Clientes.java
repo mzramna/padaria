@@ -59,7 +59,7 @@ public class Clientes {
             }
         }
         if (ok) {
-            for (int i = 0; i < linha.length; i++) {
+            for (int i = 0; i < colunas.length; i++) {
                 carregarCSV(colunas[i], linha[i]);
             }
         }

@@ -5,13 +5,17 @@
  */
 package classes;
 
+import java.util.Arrays;
+
 /**
  *
  * @author migue
  */
 public class Fornecedores {
+
     private int codigo;
-    private String nome,endereco,telefone,cnpj,pessoaContato;
+    private String nome, endereco, telefone, cnpj, pessoaContato;
+    private static final String[] associacao = {"Código", "Nome", "Endereço", "Telefone", "CNPJ", "Pessoa de contato"};
 
     public Fornecedores(int codigo, String nome, String endereco, String telefone, String cnpj, String pessoaContato) {
         this.codigo = codigo;
@@ -20,6 +24,65 @@ public class Fornecedores {
         this.telefone = telefone;
         this.cnpj = cnpj;
         this.pessoaContato = pessoaContato;
+    }
+
+    public Fornecedores() {
+        this.codigo = 0;
+        this.nome = "";
+        this.endereco = "";
+        this.telefone = "";
+        this.cnpj = "";
+        this.pessoaContato = "";
+    }
+
+    public Fornecedores(String[] linha, String[] colunas) {
+        this.codigo = 0;
+        this.nome = "";
+        this.endereco = "";
+        this.telefone = "";
+        this.cnpj = "";
+        this.pessoaContato = "";
+        boolean ok = true;
+        for (String coluna : colunas) {
+            if (!Arrays.asList(associacao).contains(coluna)) {
+                ok = false;
+            }
+        }
+        if (ok) {
+            for (int i = 0; i < colunas.length; i++) {
+                carregarCSV(colunas[i], linha[i]);
+            }
+        }
+
+    }
+
+    public final void carregarCSV(String coluna, String valor) {
+        //String coluna_convert=associacao[coluna];
+        switch (coluna) {
+            case "Código":
+                try {
+                this.codigo = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.codigo = 0;
+            }
+            break;
+            case "Nome":
+                this.nome = valor;
+                break;
+            case "Endereço":
+                this.endereco = valor;
+                break;
+            case "Telefone":
+                this.telefone = valor;
+                break;
+            case "CNPJ":
+                this.cnpj = valor;
+                break;
+            case "Pessoa de contato":
+                this.pessoaContato = valor;
+                break;
+
+        }
     }
 
     public int getCodigo() {

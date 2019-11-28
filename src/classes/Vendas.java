@@ -5,6 +5,7 @@
  */
 package classes;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -12,16 +13,80 @@ import java.util.Date;
  * @author migue
  */
 public class Vendas {
-    private int cliente,produto,quantidade;
+
+    private int cliente, produto, quantidade;
     private Date venda;
     private char pagamento;
-    
+    private static final String[] associacao = {"Cliente", "Data de venda", "Produto", "Quantidade", "Modo de pagamento"};
+
     public Vendas(int cliente, int produto, int quantidade, Date venda, char pagamento) {
         this.cliente = cliente;
         this.produto = produto;
         this.quantidade = quantidade;
         this.venda = venda;
         this.pagamento = pagamento;
+    }
+
+    public Vendas() {
+        this.cliente = 0;
+        this.produto = 0;
+        this.quantidade = 0;
+        this.venda = new Date();
+        this.pagamento = ' ';
+    }
+
+    public Vendas(String[] linha, String[] colunas) {
+        this.cliente = 0;
+        this.produto = 0;
+        this.quantidade = 0;
+        this.venda = new Date();
+        this.pagamento = ' ';
+        boolean ok = true;
+        for (String coluna : colunas) {
+            if (!Arrays.asList(associacao).contains(coluna)) {
+                ok = false;
+            }
+        }
+        if (ok) {
+            for (int i = 0; i < colunas.length; i++) {
+                carregarCSV(colunas[i], linha[i]);
+            }
+        }
+
+    }
+
+    public final void carregarCSV(String coluna, String valor) {
+        //String coluna_convert=associacao[coluna];
+        switch (coluna) {
+            case "Cliente":
+                try {
+                this.cliente = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.cliente = 0;
+            }
+            break;
+            case "Modo de pagamento":
+                this.pagamento = valor.charAt(0);
+                break;
+            case "Data de venda":
+                try {
+                this.cliente = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.cliente = 0;
+            }
+            case "Produto":
+                try {
+                this.cliente = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.cliente = 0;
+            }
+            case "Quantidade":
+                try {
+                this.cliente = Integer.parseInt(valor);
+            } catch (NumberFormatException nfe) {
+                this.cliente = 0;
+            }
+        }
     }
 
     public int getCliente() {
@@ -64,5 +129,4 @@ public class Vendas {
         this.pagamento = pagamento;
     }
 
-    
 }
