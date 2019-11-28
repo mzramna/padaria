@@ -20,8 +20,8 @@ public class Padaria {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        /*try {
-            ArrayList<Clientes> clientes=BancoDeDados.preencherClientes("./clientes.csv");
+        try {
+            ArrayList<Clientes> clientes=BancoDeDados.buscarClientes("./clientes.csv","Tipo de cliente","F");
             for(int i=0;i<clientes.size();i++){
                 System.out.println("codigo: "+String.valueOf(clientes.get(i).getCodigo()));
                 System.out.println("nome: "+clientes.get(i).getNome());
@@ -29,7 +29,7 @@ public class Padaria {
             }
         } catch (IOException ex) {
             System.out.println("erro");
-        }*/
+        }
         /*try {
             ArrayList<Compras> compras=BancoDeDados.preencherCompras("./compras.csv");
             for(int i=0;i<compras.size();i++){
