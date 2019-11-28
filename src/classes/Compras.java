@@ -135,5 +135,10 @@ public class Compras {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "Compras{" + "notaFiscal=" + notaFiscal + ", fornecedor=" + fornecedor + ", quantidade=" + quantidade + ", produto=" + produto + ", data=" + data + '}';
+    }
+
     
 }

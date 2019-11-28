@@ -20,28 +20,24 @@ public class Padaria {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
+        /*try {
             ArrayList<Clientes> clientes=BancoDeDados.buscarClientes("./clientes.csv","Tipo de cliente","F");
             for(int i=0;i<clientes.size();i++){
-                System.out.println("codigo: "+String.valueOf(clientes.get(i).getCodigo()));
-                System.out.println("nome: "+clientes.get(i).getNome());
-                System.out.println("cadastro: "+clientes.get(i).getCadastro());
-            }
-        } catch (IOException ex) {
-            System.out.println("erro");
-        }
-        /*try {
-            ArrayList<Compras> compras=BancoDeDados.preencherCompras("./compras.csv");
-            for(int i=0;i<compras.size();i++){
-                System.out.println("fornecedor: "+compras.get(i).getFornecedor());
-                System.out.println("produto: "+compras.get(i).getProduto());
-                System.out.println("cadastro: "+compras.get(i).getData());
+                System.out.println(String.valueOf(clientes.get(i).toString()));
             }
         } catch (IOException ex) {
             System.out.println("erro");
         }*/
         /*try {
-            ArrayList<Fornecedores> fornecedores=BancoDeDados.preencherFornecedores("./fornecedores.csv");
+            ArrayList<Compras> compras=BancoDeDados.carregarCompras("./compras.csv");
+            for(int i=0;i<compras.size();i++){
+                System.out.println(compras.get(i).toString());
+            }
+        } catch (IOException ex) {
+            System.out.println("erro");
+        }*/
+        /*try {
+            ArrayList<Fornecedores> fornecedores=BancoDeDados.carregarFornecedores("./fornecedores.csv");
             for(int i=0;i<fornecedores.size();i++){
                 System.out.println("cnpj: "+fornecedores.get(i).getCnpj());
                 System.out.println("nome: "+fornecedores.get(i).getNome());
@@ -51,7 +47,7 @@ public class Padaria {
             System.out.println("erro");
         }*/
         /*try {
-            ArrayList<Produtos> produtos=BancoDeDados.preencherProdutos("./produtos.csv");
+            ArrayList<Produtos> produtos=BancoDeDados.carregarProdutos("./produtos.csv");
             for(int i=0;i<produtos.size();i++){
                 System.out.println("descricao: "+produtos.get(i).getDescricao());
                 System.out.println("codigo: "+produtos.get(i).getCodigo());
@@ -61,7 +57,7 @@ public class Padaria {
             System.out.println("erro");
         }*/
         /*try {
-            ArrayList<Vendas> vendas=BancoDeDados.preencherVendas("./vendas.csv");
+            ArrayList<Vendas> vendas=BancoDeDados.carregarVendas("./vendas.csv");
             for(int i=0;i<vendas.size();i++){
                 System.out.println("cliente: "+vendas.get(i).getCliente());
                 System.out.println("pagamento: "+vendas.get(i).getPagamento());
@@ -70,6 +66,20 @@ public class Padaria {
         } catch (IOException ex) {
             System.out.println("erro");
         }*/
+        
+        try {
+            ArrayList<Clientes> clientes=BancoDeDados.buscarClientes("./clientes.csv","Tipo de cliente","F");
+            for(int i=0;i<clientes.size();i++){
+                System.out.println(String.valueOf(clientes.get(i).toString()));
+            }
+            Clientes novoCliente=new Clientes();
+            novoCliente.preencher("./clientes.csv");
+            ArrayList<Clientes> clientes_novo;
+            clientes_novo = BancoDeDados.preencherClientes("./clientes.csv", novoCliente);
+            
+        } catch (IOException ex) {
+            System.out.println("erro");
+        }
     
 }
 }

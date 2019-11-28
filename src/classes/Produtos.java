@@ -149,4 +149,9 @@ public class Produtos {
         this.descricao = descricao;
     }
 
+    @Override
+    public String toString() {
+        return "Produtos{" + "codigo=" + codigo + ", estoqueMin=" + estoqueMin + ", estoqueAtual=" + estoqueAtual + ", custo=" + custo + ", lucro=" + lucro + ", descricao=" + descricao + '}';
+    }
+
 }

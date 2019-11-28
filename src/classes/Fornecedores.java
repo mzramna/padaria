@@ -132,4 +132,10 @@ public class Fornecedores {
     public void setPessoaContato(String pessoaContato) {
         this.pessoaContato = pessoaContato;
     }
+
+    @Override
+    public String toString() {
+        return "Fornecedores{" + "codigo=" + codigo + ", nome=" + nome + ", endereco=" + endereco + ", telefone=" + telefone + ", cnpj=" + cnpj + ", pessoaContato=" + pessoaContato + '}';
+    }
+    
 }

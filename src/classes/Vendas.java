@@ -129,4 +129,10 @@ public class Vendas {
         this.pagamento = pagamento;
     }
 
+    @Override
+    public String toString() {
+        return "Vendas{" + "cliente=" + cliente + ", produto=" + produto + ", quantidade=" + quantidade + ", venda=" + venda + ", pagamento=" + pagamento + '}';
+    }
+    
+
 }

@@ -17,15 +17,15 @@ import java.util.List;
  * @author migue
  */
 public abstract class BancoDeDados {
-
-    static public ArrayList<Clientes> preencherClientes(String arquivo) throws FileNotFoundException, IOException {
+    private static char delimitador=',';
+    static public ArrayList<Clientes> carregarClientes(String arquivo) throws FileNotFoundException, IOException {
         ArrayList<Clientes> clientes = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         //for (int i=0;i<colunas.length;i++)
-        //System.out.println(colunas[i]);
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        //System.out.println(lerColunas[i]);
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         for (String[] elemento : dados) {
             //for (int i=0;i<elemento.length;i++)
             //System.out.println(elemento[i]);
@@ -37,11 +37,11 @@ public abstract class BancoDeDados {
 
     static public ArrayList<Clientes> buscarClientes(String arquivo, String parametro, String valor) throws FileNotFoundException, IOException {
         ArrayList<Clientes> clientes = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         int indiceColunaBuscada = -1;
         for (int i = 0; i < colunas.length; i++) {
-            //System.out.println(colunas[i]+" "+parametro);
+            //System.out.println(lerColunas[i]+" "+parametro);
             if (colunas[i].equals(parametro)) {
                 indiceColunaBuscada = i;
                 break;
@@ -50,8 +50,8 @@ public abstract class BancoDeDados {
         if (indiceColunaBuscada == -1) {
             throw new java.lang.Error("invalid parametro input");
         }
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         System.out.println(dados.size());
         for (String[] elemento : dados) {
             //System.out.println(elemento[indiceColunaBuscada]);
@@ -63,14 +63,64 @@ public abstract class BancoDeDados {
         return clientes;
     }
 
-    static public ArrayList<Compras> preencherCompras(String arquivo) throws FileNotFoundException, IOException {
+    static public ArrayList<Clientes> preencherClientes(String arquivo,Clientes novoCliente) throws FileNotFoundException, IOException {
+        ArrayList<Clientes> clientes = carregarClientes(arquivo);
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
+        acessoArquivo.escreverValor(novoCliente.converterCSV(colunas));
+        return clientes;
+    }
+    
+    static public boolean existeValorClientes(String arquivo, String parametro, String valor) throws IOException{
+        ArrayList<Clientes> clientes =buscarClientes(arquivo, parametro, valor);
+        System.out.println(clientes.size());
+        if(clientes.size()>0)
+            return true;
+        return false;
+    }
+
+    static public ArrayList<Integer> buscarLinhasClientes(String arquivo, String parametro, String valor) throws FileNotFoundException, IOException {
+        ArrayList<Integer> linhas = new ArrayList<>();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
+        int indiceColunaBuscada = -1;
+        for (int i = 0; i < colunas.length; i++) {
+            //System.out.println(lerColunas[i]+" "+parametro);
+            if (colunas[i].equals(parametro)) {
+                indiceColunaBuscada = i;
+                break;
+            }
+        }
+        if (indiceColunaBuscada == -1) {
+            throw new java.lang.Error("invalid parametro input");
+        }
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
+        System.out.println(dados.size());
+        for (int i=0;i<dados.size();i++) {
+            //System.out.println(elemento[indiceColunaBuscada]);
+            if (dados.get(i)[indiceColunaBuscada].equals(valor)) {
+                //System.out.println("encontrado");
+                linhas.add(i);
+            }
+        }
+        return linhas;
+    }
+    
+    static public void editarClientes(String arquivo,int index,Clientes novoCliente) throws FileNotFoundException, IOException{
+        AcessoArquivo acessoArquivo=new AcessoArquivo(arquivo, delimitador);
+        acessoArquivo.reescreverLinha(novoCliente.converterCSV(acessoArquivo.lerColunas()), index);
+    }
+    
+////////////////////compras////////////////////////
+    static public ArrayList<Compras> carregarCompras(String arquivo) throws FileNotFoundException, IOException {
         ArrayList<Compras> compras = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         //for (int i=0;i<colunas.length;i++)
-        //System.out.println(colunas[i]);
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        //System.out.println(lerColunas[i]);
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         for (String[] elemento : dados) {
             //for (int i=0;i<elemento.length;i++)
             //System.out.println(elemento[i]);
@@ -82,11 +132,11 @@ public abstract class BancoDeDados {
     
     static public ArrayList<Compras> buscarCompras(String arquivo, String parametro, String valor) throws FileNotFoundException, IOException {
         ArrayList<Compras> compras = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         int indiceColunaBuscada = -1;
         for (int i = 0; i < colunas.length; i++) {
-            //System.out.println(colunas[i]+" "+parametro);
+            //System.out.println(lerColunas[i]+" "+parametro);
             if (colunas[i].equals(parametro)) {
                 indiceColunaBuscada = i;
                 break;
@@ -95,8 +145,8 @@ public abstract class BancoDeDados {
         if (indiceColunaBuscada == -1) {
             throw new java.lang.Error("invalid parametro input");
         }
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         System.out.println(dados.size());
         for (String[] elemento : dados) {
             //System.out.println(elemento[indiceColunaBuscada]);
@@ -107,15 +157,15 @@ public abstract class BancoDeDados {
         }
         return compras;
     }
-
-    static public ArrayList<Fornecedores> preencherFornecedores(String arquivo) throws FileNotFoundException, IOException {
+/////////////////fornecedores/////////////////////
+    static public ArrayList<Fornecedores> carregarFornecedores(String arquivo) throws FileNotFoundException, IOException {
         ArrayList<Fornecedores> fornecedores = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         //for (int i=0;i<colunas.length;i++)
-        //System.out.println(colunas[i]);
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        //System.out.println(lerColunas[i]);
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         for (String[] elemento : dados) {
             //for (int i=0;i<elemento.length;i++)
             //System.out.println(elemento[i]);
@@ -127,11 +177,11 @@ public abstract class BancoDeDados {
     
     static public ArrayList<Fornecedores> buscarFornecedores(String arquivo, String parametro, String valor) throws FileNotFoundException, IOException {
         ArrayList<Fornecedores> fornecedores = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         int indiceColunaBuscada = -1;
         for (int i = 0; i < colunas.length; i++) {
-            //System.out.println(colunas[i]+" "+parametro);
+            //System.out.println(lerColunas[i]+" "+parametro);
             if (colunas[i].equals(parametro)) {
                 indiceColunaBuscada = i;
                 break;
@@ -140,8 +190,8 @@ public abstract class BancoDeDados {
         if (indiceColunaBuscada == -1) {
             throw new java.lang.Error("invalid parametro input");
         }
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         System.out.println(dados.size());
         for (String[] elemento : dados) {
             //System.out.println(elemento[indiceColunaBuscada]);
@@ -152,15 +202,15 @@ public abstract class BancoDeDados {
         }
         return fornecedores;
     }
-
-    static public ArrayList<Produtos> preencherProdutos(String arquivo) throws FileNotFoundException, IOException {
+///////////////////produtos/////////////////////
+    static public ArrayList<Produtos> carregarProdutos(String arquivo) throws FileNotFoundException, IOException {
         ArrayList<Produtos> produtos = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         //for (int i=0;i<colunas.length;i++)
-        //System.out.println(colunas[i]);
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        //System.out.println(lerColunas[i]);
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         for (String[] elemento : dados) {
             //for (int i=0;i<elemento.length;i++)
             //System.out.println(elemento[i]);
@@ -172,11 +222,11 @@ public abstract class BancoDeDados {
     
     static public ArrayList<Produtos> buscarProdutos(String arquivo, String parametro, String valor) throws FileNotFoundException, IOException {
         ArrayList<Produtos> produtos = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         int indiceColunaBuscada = -1;
         for (int i = 0; i < colunas.length; i++) {
-            //System.out.println(colunas[i]+" "+parametro);
+            //System.out.println(lerColunas[i]+" "+parametro);
             if (colunas[i].equals(parametro)) {
                 indiceColunaBuscada = i;
                 break;
@@ -185,8 +235,8 @@ public abstract class BancoDeDados {
         if (indiceColunaBuscada == -1) {
             throw new java.lang.Error("invalid parametro input");
         }
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         System.out.println(dados.size());
         for (String[] elemento : dados) {
             //System.out.println(elemento[indiceColunaBuscada]);
@@ -197,15 +247,15 @@ public abstract class BancoDeDados {
         }
         return produtos;
     }
-
-    static public ArrayList<Vendas> preencherVendas(String arquivo) throws FileNotFoundException, IOException {
+///////////////////////////vendas//////////////////////////
+    static public ArrayList<Vendas> carregarVendas(String arquivo) throws FileNotFoundException, IOException {
         ArrayList<Vendas> vendas = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         //for (int i=0;i<colunas.length;i++)
-        //System.out.println(colunas[i]);
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        //System.out.println(lerColunas[i]);
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         for (String[] elemento : dados) {
             //for (int i=0;i<elemento.length;i++)
             //System.out.println(elemento[i]);
@@ -217,11 +267,11 @@ public abstract class BancoDeDados {
     
     static public ArrayList<Vendas> buscarVendas(String arquivo, String parametro, String valor) throws FileNotFoundException, IOException {
         ArrayList<Vendas> vendas = new ArrayList<>();
-        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, ';');
-        String[] colunas = acessoArquivo.colunas();
+        AcessoArquivo acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        String[] colunas = acessoArquivo.lerColunas();
         int indiceColunaBuscada = -1;
         for (int i = 0; i < colunas.length; i++) {
-            //System.out.println(colunas[i]+" "+parametro);
+            //System.out.println(lerColunas[i]+" "+parametro);
             if (colunas[i].equals(parametro)) {
                 indiceColunaBuscada = i;
                 break;
@@ -230,8 +280,8 @@ public abstract class BancoDeDados {
         if (indiceColunaBuscada == -1) {
             throw new java.lang.Error("invalid parametro input");
         }
-        acessoArquivo = new AcessoArquivo(arquivo, ';');
-        List<String[]> dados = acessoArquivo.valores();
+        acessoArquivo = new AcessoArquivo(arquivo, delimitador);
+        List<String[]> dados = acessoArquivo.lerValores();
         System.out.println(dados.size());
         for (String[] elemento : dados) {
             //System.out.println(elemento[indiceColunaBuscada]);
